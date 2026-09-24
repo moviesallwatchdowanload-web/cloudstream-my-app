@@ -23,6 +23,46 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Prepare XeonMovies launcher icon
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          set -e
+
+          for source in main prerelease debug; do
+            mkdir -p "app/src/$source/res/mipmap-mdpi"
+            mkdir -p "app/src/$source/res/mipmap-hdpi"
+            mkdir -p "app/src/$source/res/mipmap-xhdpi"
+            mkdir -p "app/src/$source/res/mipmap-xxhdpi"
+            mkdir -p "app/src/$source/res/mipmap-xxxhdpi"
+          done
+
+          convert logo.png -resize 48x48\! app/src/main/res/mipmap-mdpi/ic_launcher.png
+          convert logo.png -resize 72x72\! app/src/main/res/mipmap-hdpi/ic_launcher.png
+          convert logo.png -resize 96x96\! app/src/main/res/mipmap-xhdpi/ic_launcher.png
+          convert logo.png -resize 144x144\! app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+          convert logo.png -resize 192x192\! app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+
+          cp app/src/main/res/mipmap-mdpi/ic_launcher.png app/src/main/res/mipmap-mdpi/ic_launcher_round.png
+          cp app/src/main/res/mipmap-hdpi/ic_launcher.png app/src/main/res/mipmap-hdpi/ic_launcher_round.png
+          cp app/src/main/res/mipmap-xhdpi/ic_launcher.png app/src/main/res/mipmap-xhdpi/ic_launcher_round.png
+          cp app/src/main/res/mipmap-xxhdpi/ic_launcher.png app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png
+          cp app/src/main/res/mipmap-xxxhdpi/ic_launcher.png app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
+
+          for source in prerelease debug; do
+            cp app/src/main/res/mipmap-mdpi/ic_launcher.png "app/src/$source/res/mipmap-mdpi/ic_launcher.png"
+            cp app/src/main/res/mipmap-hdpi/ic_launcher.png "app/src/$source/res/mipmap-hdpi/ic_launcher.png"
+            cp app/src/main/res/mipmap-xhdpi/ic_launcher.png "app/src/$source/res/mipmap-xhdpi/ic_launcher.png"
+            cp app/src/main/res/mipmap-xxhdpi/ic_launcher.png "app/src/$source/res/mipmap-xxhdpi/ic_launcher.png"
+            cp app/src/main/res/mipmap-xxxhdpi/ic_launcher.png "app/src/$source/res/mipmap-xxxhdpi/ic_launcher.png"
+
+            cp app/src/main/res/mipmap-mdpi/ic_launcher_round.png "app/src/$source/res/mipmap-mdpi/ic_launcher_round.png"
+            cp app/src/main/res/mipmap-hdpi/ic_launcher_round.png "app/src/$source/res/mipmap-hdpi/ic_launcher_round.png"
+            cp app/src/main/res/mipmap-xhdpi/ic_launcher_round.png "app/src/$source/res/mipmap-xhdpi/ic_launcher_round.png"
+            cp app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png "app/src/$source/res/mipmap-xxhdpi/ic_launcher_round.png"
+            cp app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png "app/src/$source/res/mipmap-xxxhdpi/ic_launcher_round.png"
+          done
+
       - name: Grant execute permission
         run: chmod +x gradlew
 
